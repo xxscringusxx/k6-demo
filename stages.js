@@ -20,7 +20,7 @@ export default function () {
     const res = http.get("https://www.devopstoolkitseries.com" + page);
     check(res, {
       "status was 200": (r) => r.status == 200,
-      "duration was <= ": (r) => r.timings.duration <= 200
+      "duration was <= ": (r) => r.timings.duration <= 100
     });
     sleep(1);
   }

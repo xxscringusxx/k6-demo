@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <h1>Welcome! Random Numbers: {{ random_num[0], random_num[1], random_num[2]}}</h1>
+    <p>This is a simple webpage made with Flask in Python.</p> 
+<tbody>
+  {% for RN in random_num %}
+    <tr>
+      <td>{{ RN }}</td>
+    </tr>
+  {% endfor %}
+</tbody>  
+
+</body>
+</html>
