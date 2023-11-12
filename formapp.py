@@ -1,30 +1,9 @@
 from flask import Flask, render_template, request
+from src.entrymethods import add_entry_to_file, create_entry, read_existing_entries
 
 app = Flask(__name__)
 user_info_file = 'user_info.txt'
-
-def add_entry_to_file(entry):
-    with open(user_info_file, 'a') as file:
-        file.write(f'{entry}\n')
-
-
-def create_entry():
-    name = request.form['name']
-    age = request.form['age']
-    address = request.form['address']
-
-    entry = f'{name},{age},{address}'
-    return entry
-
-def read_existing_entries():
-    try:
-        with open(user_info_file, 'r') as file:
-            existing_entries = set(line.strip() for line in file)
-        return existing_entries
-    except FileNotFoundError:
-        return set()
-
-unique_entries = read_existing_entries()
+unique_entries = read_existing_entries(user_info_file)
 
 @app.route('/')
 def index():
@@ -32,13 +11,13 @@ def index():
 
 @app.route('/save', methods=['POST'])
 def save():
-    entry = create_entry()
+    entry = create_entry(request)
 
     if entry in unique_entries:
         return 'Information already exists!'
 
     unique_entries.add(entry)
-    add_entry_to_file(entry)
+    add_entry_to_file(user_info_file, entry)
 
     return 'Information saved successfully!'
 
