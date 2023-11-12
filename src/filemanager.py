@@ -14,4 +14,7 @@ class FileManager:
         except FileNotFoundError:
             return set()
 
-
+    def write_entries_to_file(self, entries):
+        with open(self.user_info_file, 'w') as file:
+            for entry in entries:
+                file.write(f'{entry}\n')
