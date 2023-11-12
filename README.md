@@ -3,3 +3,6 @@
 * [The Best Performance And Load Testing Tool? k6 By Grafana Labs](https://youtu.be/5OgQuVAR14I)
 
 to run formappy.py do the following: python formappy.py
+
+
+![this is a test image](images/test.png)

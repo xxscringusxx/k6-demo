@@ -1,23 +1,34 @@
 from flask import Flask, render_template, request
-from src import entrymethods 
+from src.entrymethods import create_entry
+from src.filemanager import FileManager 
+from flask import redirect
+
 
 app = Flask(__name__)
 user_info_file = 'user_info.txt'
-unique_entries = entrymethods.read_existing_entries(user_info_file)
 
-@app.route('/')
-def index():
+@app.route('/confirmation')
+def confirmation():
+    return "Entry saved!"
+
+
+@app.route('/') 
+def form():
     return render_template('form.html')
+
+
+file_manager = FileManager(user_info_file)
 
 @app.route('/save', methods=['POST'])
 def save():
-    entry = entrymethods.create_entry(request)
+    entry = create_entry(request)
+
+    unique_entries = file_manager.read_existing_entries()
 
     if entry in unique_entries:
         return 'Information already exists!'
 
-    unique_entries.add(entry)
-    entrymethods.add_entry_to_file(user_info_file, entry)
+    file_manager.add_entry_to_file(entry)
 
     return 'Information saved successfully!'
 
