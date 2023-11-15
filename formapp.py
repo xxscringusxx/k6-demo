@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from src.entrymethods import create_entry
 from src.filemanager import FileManager
+from flask import url_for
 
 app = Flask(__name__)
 user_info_file = 'user_info.txt'
@@ -19,7 +20,8 @@ def index():
             existing_entries.add(entry)
 
     entries = [{'name': name, 'age': age, 'address': address} for name, age, address in (entry.split(',') for entry in existing_entries)]
-    return render_template('form.html', entries=entries)
+    return render_template('form.html', entries=entries, style_url=url_for('static', filename='style.css'))
+
 
 @app.route('/delete', methods=['POST'])
 def delete():
