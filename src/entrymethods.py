@@ -6,4 +6,3 @@ def create_entry(request):
     entry = f'{name},{age},{address}'
     return entry
 
-

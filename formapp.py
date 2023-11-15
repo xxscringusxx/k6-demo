@@ -9,18 +9,14 @@ file_manager = FileManager(user_info_file)
 # Define existing_entries as a global variable
 existing_entries = file_manager.read_existing_entries()
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])  # Allow both GET and POST requests
 def index():
-    entries = [{'name': name, 'age': age, 'address': address} for name, age, address in (entry.split(',') for entry in existing_entries)]
-    return render_template('form.html', entries=entries)
+    if request.method == 'POST':
+        entry = create_entry(request)
 
-@app.route('/create', methods=['POST'])
-def create():
-    entry = create_entry(request)
-
-    if entry not in existing_entries:
-        file_manager.add_entry_to_file(entry)
-        existing_entries.add(entry)
+        if entry not in existing_entries:
+            file_manager.add_entry_to_file(entry)
+            existing_entries.add(entry)
 
     entries = [{'name': name, 'age': age, 'address': address} for name, age, address in (entry.split(',') for entry in existing_entries)]
     return render_template('form.html', entries=entries)

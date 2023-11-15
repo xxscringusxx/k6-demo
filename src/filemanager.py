@@ -18,3 +18,7 @@ class FileManager:
         with open(self.user_info_file, 'w') as file:
             for entry in entries:
                 file.write(f'{entry}\n')
+
+    def clear_entries(self):
+        with open(self.user_info_file, 'w'):
+	        pass
