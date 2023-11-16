@@ -2,9 +2,9 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ style_url }}">
-    
+    <link rel="stylesheet" href="{{ userstyle_url }}">
     <style>
-
+ 
     </style>
 </head>
 <body>
@@ -18,31 +18,34 @@
         </form>
 
         <h2>User Information</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for entry in entries %}
-                <tr>
-                    <td>{{ entry.name }}</td>
-                    <td>{{ entry.age }}</td>
-                    <td>{{ entry.address }}</td>
-                    <td>
-                        <form method="POST" action="/delete">
-                            <input type="hidden" name="entry" value="{{ entry.name }},{{ entry.age }},{{ entry.address }}">
-                            <button class="delete-button" type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <form method="POST" action="/delete">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Address</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in entries %}
+                    <tr>
+                        <td>{{ entry.name }}</td>
+                        <td>{{ entry.age }}</td>
+                        <td>{{ entry.address }}</td>
+                        <td>
+                            <form method="POST" action="/delete">
+                                <input type="hidden" name="entry" value="{{ entry.name }},{{ entry.age }},{{ entry.address }}">
+                                <button class="delete-button" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button class="clear-button" type="submit" formaction="/clear">Clear All</button>
+        </form>
     </div>
 </body>
 </html>

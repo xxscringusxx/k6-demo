@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from src.entrymethods import create_entry
 from src.filemanager import FileManager
-from flask import url_for
 
 app = Flask(__name__)
 user_info_file = 'user_info.txt'
@@ -20,7 +19,7 @@ def index():
             existing_entries.add(entry)
 
     entries = [{'name': name, 'age': age, 'address': address} for name, age, address in (entry.split(',') for entry in existing_entries)]
-    return render_template('form.html', entries=entries, style_url=url_for('static', filename='style.css'))
+    return render_template('form.html', entries=entries, style_url=url_for('static', filename='style.css'), userstyle_url=url_for('static', filename='userstyle.css'))
 
 
 @app.route('/delete', methods=['POST'])
@@ -31,6 +30,12 @@ def delete():
         existing_entries.remove(entry_to_delete)
         file_manager.write_entries_to_file(existing_entries)  # Update the file without the deleted entry
 
+    return redirect(url_for('index'))
+
+@app.route('/clear', methods=['POST'])
+def clear():
+    existing_entries.clear()
+    file_manager.clear_entries()
     return redirect(url_for('index'))
 
 if __name__ == '__main__':

@@ -79,3 +79,16 @@ tr:nth-child(even) {
 .delete-button:hover {
     background-color: #cc4b29;
 }
+
+.clear-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.clear-button:hover {
+    background-color: #c82333;
+}
